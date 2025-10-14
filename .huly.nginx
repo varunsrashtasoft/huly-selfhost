@@ -11,6 +11,16 @@ server {
         proxy_pass http://front:8080;
     }
 
+    location /_account {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        rewrite ^/_account(/.*)$ $1 break;
+        proxy_pass http://account:3000/;
+    }
+
     location /_accounts {
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
@@ -19,6 +29,32 @@ server {
 
         rewrite ^/_accounts(/.*)$ $1 break;
         proxy_pass http://account:3000/;
+    }
+    # GitHub integration API
+    location /api/v1/github {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://github:3500;
+    }
+
+    # GitHub installation API
+    location /api/v1/installation {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://github:3500;
+    }
+
+    # Sometimes frontend uses /api/v1/auth (depending on version)
+    location /api/v1/auth {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_pass http://github:3500;
     }
 
     #location /_print {
@@ -47,18 +83,18 @@ server {
     #    proxy_pass http://aibot:4010/;
     #}
 
-    #location /_love {
-    #    proxy_set_header Host $host;
-    #    proxy_set_header X-Real-IP $remote_addr;
-    #    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    #    proxy_set_header X-Forwarded-Proto $scheme;
-
-    #    proxy_http_version 1.1;
-    #    proxy_set_header Upgrade $http_upgrade;
-    #    proxy_set_header Connection "upgrade";
-    #    rewrite ^/_love(/.*)$ $1 break;
-    #    proxy_pass http://love:8096/;
-    #}
+    location /_love {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    
+	proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        rewrite ^/_love(/.*)$ $1 break;
+        proxy_pass http://love:8096/;
+    }
 
     location /_collaborator {
         proxy_set_header Host $host;
@@ -116,5 +152,24 @@ server {
 
         rewrite ^/_stats(/.*)$ $1 break;
         proxy_pass http://stats:4900/;
+    }
+    location /_github {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        rewrite ^/_github(/.*)$ $1 break;
+        proxy_pass http://github:3500/;
+    }
+
+    location /github {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        rewrite ^/github(/.*)$ $1 break;
+        proxy_pass http://account:3000/;
     }
 }

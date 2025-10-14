@@ -138,30 +138,31 @@ services:
     networks:
       - huly_net
 
-  account:
-    image: hardcoreeng/account:${HULY_VERSION}
-    environment:
-      - SERVER_PORT=3000
-      - SERVER_SECRET=${SECRET}
-      - DB_URL=${CR_DB_URL}
-      - TRANSACTOR_URL=ws://transactor:3333;ws${SECURE:+s}://${HOST_ADDRESS}/_transactor
-      - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
-      - FRONT_URL=http${SECURE:+s}://${HOST_ADDRESS}
-      - FRONT_INTERNAL_URL=http://front:8080
+#  account:
+#    image: hardcoreeng/account:${HULY_VERSION}
+#    environment:
+#      - SERVER_PORT=3000
+#      - SERVER_SECRET=${SECRET}
+#      - DB_URL=${CR_DB_URL}
+#      - TRANSACTOR_URL=ws://transactor:3333;ws${SECURE:+s}://${HOST_ADDRESS}/_transactor
+#      - STORAGE_CONFIG=minio|minio?accessKey=minioadmin&secretKey=minioadmin
+#      - FRONT_URL=http${SECURE:+s}://${HOST_ADDRESS}
+#      - FRONT_INTERNAL_URL=http://front:8080
       #- STATS_URL=http${SECURE:+s}://${HOST_ADDRESS}/stats
-      - STATS_INTERNAL_URL=http://stats:4900
-      - MODEL_ENABLED=*
-      - ACCOUNTS_URL=http${SECURE:+s}://${HOST_ADDRESS}
-      - ACCOUNTS_INTERNAL_URL=http://account:3000
-      - ACCOUNT_PORT=3000
-      - QUEUE_CONFIG=redpanda:9092
-      - GITHUB_CLIENT_ID=${GITHUB_CLIENTID}    # add for Github Integration
-      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}    # add for Github Integration
-      - GITHUB_APP_SLUG=huly-github  # GitHub app slug for installation URL
-      - GITHUB_INSTALL_BASE_URL=https://github.com/apps/huly-github  # GitHub installation base URL
-    restart: unless-stopped
-    networks:
-      - huly_net
+#      - STATS_INTERNAL_URL=http://stats:4900
+#      - MODEL_ENABLED=*
+#      - ACCOUNTS_URL=http${SECURE:+s}://${HOST_ADDRESS}
+#      - ACCOUNTS_INTERNAL_URL=http://account:3000
+#      - ACCOUNT_PORT=3000
+#      - QUEUE_CONFIG=redpanda:9092
+#      - GITHUB_CLIENT_ID=${GITHUB_CLIENTID}    # add for Github Integration
+#      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}    # add for Github Integration
+#      - GITHUB_APP_SLUG=huly-github  # GitHub app slug for installation URL
+#      - GITHUB_INSTALL_BASE_URL=https://github.com/apps/huly-github  # GitHub installation base URL
+#    restart: unless-stopped
+#    networks:
+#      - huly_net
+
 
   workspace:
     image: hardcoreeng/workspace:${HULY_VERSION}

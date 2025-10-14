@@ -1,0 +1,18 @@
+root 1.8 MiB (16 GiB / 0 B)
+    sql 1.6 MiB
+        session root 160 KiB (21 KiB / 84 KiB)
+            session 93 KiB
+                session prepared statements 63 KiB
+        session root 150 KiB (21 KiB / 84 KiB)
+            session 80 KiB
+                session prepared statements 50 KiB
+        session root 200 KiB (21 KiB / 84 KiB)
+            session 132 KiB
+                session prepared statements 102 KiB
+        conn 315 KiB
+        SQLStats 500 KiB
+    server-cache-mon 30 KiB
+    closed-session-cache 10 KiB
+    kv-mem 20 KiB
+        rangefeed-monitor 20 KiB
+        rangefeed-system-monitor 80 KiB (128 MiB / 0 B)
