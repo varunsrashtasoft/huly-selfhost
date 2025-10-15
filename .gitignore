@@ -9,3 +9,4 @@ huly_v7.conf
 .rp.secret
 .idea
 cr_data_path
+cr_data_path/auxiliary/EMERGENCY_BALLAST
